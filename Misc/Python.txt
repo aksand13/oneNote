@@ -2,5 +2,15 @@ Dictionary Mutable
 
 File handling 
 -----------
-			    flight_file=open("flight.txt","r")     # comment- operations possible r,w,a
+ flight_file=open("flight.txt","r")     # comment- operations possible r,w,a
           
+functions:-
+1> input 
+	name=input("What is your name")  # string input
+	print(name)
+	
+	age=input("your age")		#integer input
+	print(age)
+
+single line comment python - sue #
+Multi line comment use """ to start and """ to end. or use #
