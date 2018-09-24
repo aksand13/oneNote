@@ -1,0 +1,6 @@
+Dictionary Mutable
+
+File handling 
+-----------
+			    flight_file=open("flight.txt","r")     # comment- operations possible r,w,a
+          
