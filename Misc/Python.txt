@@ -12,6 +12,12 @@ https://www.w3resource.com/python-exercises/
 https://www.quora.com/Can-you-give-me-links-to-advanced-Python-programming-problems-exercises
 
 
+To read json from a file and read directly as nested List -use json.loads()
+=========================================================
+data_file=open('sample.json')
+data = json.load(data_file)
+print(data["Student"][0]["id"])
+
 -------------------------------------------------------------------
 
 Dictionary Mutable
