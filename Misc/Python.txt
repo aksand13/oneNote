@@ -11,6 +11,9 @@ https://www.reddit.com/r/Python/comments/49j7rs/what_python_book_for_experienced
 https://www.w3resource.com/python-exercises/
 https://www.quora.com/Can-you-give-me-links-to-advanced-Python-programming-problems-exercises
 
+https://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html
+https://devdocs.io/python~3.7/library/turtle#turtle.xcor
+
 
 To read json from a file and read directly as nested List -use json.loads()
 =========================================================
