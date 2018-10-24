@@ -18,7 +18,7 @@ Exmaples of Lambda
 
   3> reduce
   computation on a list and returning the result. It applies a rolling computation to sequential pairs of values in a list.
-
+  It accepts an iterator to process, but it's not an iterator itself. It returns a single result:
 
   # conventional
     product = 1 
