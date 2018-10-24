@@ -1,0 +1,4 @@
+https://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html
+
+Lambda <args>  : <operation on args>
+Lambda a,b,c : a+b+c
