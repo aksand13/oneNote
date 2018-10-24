@@ -31,11 +31,65 @@ Exmaples of Lambda
     from functools import reduce
     product = reduce((lambda x, y: x * y), [1, 2, 3, 4])
 
-pickling:-
-    serializing/deserializing  data from file. reading/writnig the data as streams of bytes.
-    dbfile = open('examplePickle', 'rb')      
-    db = pickle.load(dbfile) 
+-----------------------------------------------------------------------------------------
+
 
 examples of map, reduce...refer practice sheet for further problems.
 #print(reduce(  (lambda x,y: x*y ), range(1,input()+1)))
 #print(map   (    lambda x : x*x ,   range(1,input()+1)      ))
+
+----------------------------------------------------------------------
+
+pickling:-
+    serializing/deserializing  data from file. reading/writnig the data as streams of bytes.
+    dbfile = open('examplePickle', 'rb')      
+    db = pickle.load(dbfile) 
+    
+Iterators -- list() tuple()
+generators -- range() yrange()
+
+-----------
+ITERTOOLS-- 
+-----------
+  
+https://medium.com/@jasonrigden/a-guide-to-python-itertools-82e5a306cdf8
+
+import itertools
+#import operator     # required for some cases
+
+itertools
+	accumulate()  -- carries out operation on itertor and returns another 
+					data=[1,2,3]    
+					itertools.accumulate(data, operator.mul)   # output 1,2,6
+					
+	combinations() -- geneates all possible combinations
+					shapes = ['circle', 'triangle', 'square',]
+					itertools.combinations(shapes, 2)    # taking 2 element at a time
+							('circle', 'triangle')
+							('circle', 'square')
+							('triangle', 'square')
+
+	combinations_with_replacement()  -- same as comniations but allows repetitions
+
+	count()  -- returns list starting with the number with step.. endlessly
+				itertools.count(10,3)   # 10,13,16
+	cycle() -- This function cycles through an iterator endlessly.
+
+	chain() - to concatenate 2 lists.   itertools.chain(it1, it2)
+	compress(x,y) -- filters one list from another
+					x= [1,2,3] y=[True,False,True]  
+					itertools.compress(x,y)     #1,3
+
+	dropwhile()
+	filterfalse()
+	groupby()
+	islice()
+	permutations()
+	product()
+	repeat()
+	starmap()
+	takewhile()
+	tee()
+	zip_longest()
+    izip() - to transpose a n dim list    itertools.izip(["a", "b", "c"], [1, 2, 3]):
+	
