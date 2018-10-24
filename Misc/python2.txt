@@ -1,5 +1,9 @@
 https://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html
 
+
+aws- serverless website
+https://medium.com/employbl/tutorial-for-building-a-web-application-with-amazon-s3-lambda-dynamodb-and-api-gateway-6d3ddf77f15a
+
 Lambda <args>  : <operation on args>
 Lambda a,b,c : a+b+c
 
