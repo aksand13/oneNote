@@ -2,3 +2,36 @@ https://www.cs.put.poznan.pl/csobaniec/software/python/py-qrc.html
 
 Lambda <args>  : <operation on args>
 Lambda a,b,c : a+b+c
+
+Exmaples of Lambda
+  1> Map(  function , args)       ## function on top of the args.
+  
+          items = [1, 2, 3, 4, 5]
+          squared = list(map(lambda x: x**2, items))
+
+  2> filter( function, args)       ## returns all the args for whih function returns true. 
+  
+        number_list = range(-5, 5)
+        less_than_zero = list(filter(lambda x: x < 0, number_list))
+        print(less_than_zero)
+        # Output: [-5, -4, -3, -2, -1]
+
+  3> reduce
+  computation on a list and returning the result. It applies a rolling computation to sequential pairs of values in a list.
+
+
+  # conventional
+    product = 1 
+    list = [1, 2, 3, 4]
+    for num in list:
+        product = product * num
+        # product = 24
+        
+    # using reduce    
+    from functools import reduce
+    product = reduce((lambda x, y: x * y), [1, 2, 3, 4])
+
+pickling:-
+    serializing/deserializing  data from file. reading/writnig the data as streams of bytes.
+    dbfile = open('examplePickle', 'rb')      
+    db = pickle.load(dbfile) 
