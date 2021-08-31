@@ -1,0 +1,639 @@
+No semicolon at the end as it is a highly indented language.
+print("Number of landings:",no_of_landings)
+
+Operators +,-,*,/,**,%, // indicates integer division
+No variable declaration required. Data types are implicitly understood.(Dynamically typed language).
+Strings are immutable (like Java Strings cannot be changed. If you change the value the string object is dropped and a new object is recreated).
+For strings you can use single quotes('') or double quotes(""). If a quote is falling within the string use triple quotes ('''Uncle's '''). Or use a \ escape char(\' \t \n \r)
+Slicing and Indexing is available for strings. Str="Develop"   str[0:2]
+
+Lists - similar to strings. x=[1,2,3]. Slicing and indexing is available. Lists are mutable (value can be changed). 
+		List elements are stored continuously in memory.
+		Index starts from 0. Heterogeneous data.
+		x=str[1:3]  starting at index position 1 uptill index position 2 (3-1)
+		Creating an empty list	sample_list=[]	
+		Creating a list with known size and known elements	sample_list1=["Mark",5,"Jack",9, "Chan",5] sample_list2=["Mark","Jack", "Chan"]	List can store both homogeneous and heterogeneous elements
+		Creating a list with known size and unknown elements	sample_list=[None]*5	None denotes an unknown value in Python
+		Length of the list	len(sample_list)	Displays the number of elements in the list
+		airline_details=[["AI",8], ["EM",10],["BA",7]]       #lists of list
+		airline_details[2][1]                             # to get to value 7
+
+Tuples - similar to Lists. x=(1,2,3). Slicing and indexing available. x[2].  Immutable. Hence READ-ONLY . 
+		Nesting can be done.  y=x,(4,5,6) =>y=((1,2,3),(4,5,6))
+		x="a","b","c" 
+		x=("a","b","c")      #len(x) for length
+		x="a",              # for having a single element you need  to have a comma.
+		Changing a tuple:- is not allowed as tuples are read only. But if there is a requirement you can reassign the tuple reference a new object. There are basically two ways of replacing a tuple's element at a given index. Either convert the tuple to a list, replace the element and convert back, or construct a new tuple by concatenation.  It turns out that for short tuples (on Python 3.3), concatenation is actually faster!
+		
+			In [1]: def replace_at_index1(tup, ix, val):
+   ...:     lst = list(tup)
+   ...:     lst[ix] = val
+   ...:     return tuple(lst)
+   ...:
+			In [2]: def replace_at_index2(tup, ix, val):
+   ...:     return tup[:ix] + (val,) + tup[ix+1:]
+   ...:
+		
+		
+Dictionary - A dictionaries can be used to store an unordered collection of key-value pair
+		Creating a dictionary	crew_details=	First element in every pair is the key and the second element is the value.
+			{ "Pilot":"Kumar",
+			"Co-pilot":"Raghav",
+			"Head-Strewardess":"Malini",
+			"Stewardess":"Mala" }
+		Accessing the value using key	crew_details["Pilot"]	This will return the corresponding value for the specified key
+		Iterating through the dictionary	for key,value in crew_details.items():	items function gives both key and value, which can be used in a for loop.
+			     print(key,":",value)
+	
+	From <http://ilpce/fp/Generic/PF/page/196> 
+	
+	
+Control Flow
+	if():
+		Statement
+	elif():
+	
+	Else:
+		Statement
+	Outside_loop_statement.
+While loop
+	While():
+		Statement
+For Loop
+	For I in (1,2,3,4,5):     # or a list,tuple
+	For number in range(start, end, step)                  # loop will iterate excluding the end value.
+	
+Functions
+	def printdetails(name,age):                          #definition , return value can also be done . If no return value (or return statement) is specified  , the value returned is None. 
+		[Return ]
+	
+	printdetails(name="xxx",age=45)               #invocation,   the returned value can be assigned to a var
+	
+	Function calls:
+	Type1-Positional                     def func_name(arg1,arg2)                  func_name(value1,value2)                               # order and type combo
+	Type2-keyword                       def func_name(arg1,arg2)                  func_name(arg1=value1, arg2=value2)          # arg to value mapping
+	Type3-Default                          def func_name(arg1,arg2=<default value>)  func_name(value1)                               # skip the default value
+	TYpe4-variable arg count      def func_name(arg1,arg2,*arg3)       func_name(value1,value2,value3,value4…)    #  * is considered to be a varying length argument.
+	
+	Recursive functions are also entertained.
+	
+Class
+	class Accountdetails():                                                   #definition
+		def __init__(self, initial_balance=0):                # constructor definition
+		        self.balance = initial_balance
+		def withdraw(self,amount):
+		        self.balance -= amount
+		
+	my_account= Accountdetails(1000)                           #object creation and calling constructor.
+In Python, you can find out the data type of a variable by writing type(variable_name)
+Languages like Python and JavaScript automatically create just the right memory needed – neither less nor more
+
+	Common Operators	Python	JavaScript	Go
+	Arithmetic Operators	+,-,*,/, %,//	+,-,*,/,%,++,--	+,-,*,/,%,++,--
+	Relational Operators	==,!=,>,<,>=,<=	==,===,!=,!==,>,<,>=,<=	==,!=,>,<,>=,<=
+	Assignment Operators	=,+=,-=,*=,/=,%=	=,+=,-=,*=,/=,%=	=,+=,-=,*=,/=,%=
+	Logical Operators	and,or,not	&&,||,!	&&,||,!
+	From <http://ilpce/fp/Generic/PF/page/49> 
+	
+	BODMAS rule
+	Brackets have the highest precedence followed by orders.
+	Modulo, Division and Multiplication have the same precedence. Hence if all appears in an expression, it is evaluated from Left to Right.
+	Addition and Subtraction have the same precedence. Hence if both appears in an expression, it is evaluated from Left to Right.
+	
+	Var naming uses underscore based names.
+	X+=1 kind notation is allowed.
+	
+	Implicit Typecasting:  num=“10”+20  =>num="1020" Not Supported
+	Explicit typecasting: num=Number(“10”)+20 => num=30
+	Conversion	Python	JavaScript	Go
+	Conversion to int	int()	Number()	strconv.Atoi()
+		Example:num=int(“10”)	Example:num=Number(“10”)	Example:num=strconv.Atoi (“10”)
+		Value of num will be 10	Value of num will be 10	Value of num will be 10
+	Conversion to string	str()	String()	strconv.Itoa()
+		Example:num=str(10)	Example:num=String(10)	Example:num=strconv.Itoa (10)
+		Value of num will be “10”	Value of num will be “10”	Value of num will be “10”
+	
+	No switch case allowed in python.
+	
+	Boolean false in python can be None,False,0, empty string.
+	All other are True values
+	
+	Pass by Value, Pass by Reference:
+	In Python, we don't have to think about pass by value and pass by reference as it does that automatically for you. In Python, when an argument passed to a function is modified inside it, whether the change is visible outside or not depends on whether the variable is mutable or not. For mutable, change will be visible.
+	
+	Variable and scope
+	Python does not allows modification of global variables within and function. You can have a local variable (within a func) with same name as global var.
+	If you do want to modify the global var within a func, you would need to declare the var as 'global' within the func also.
+			x=2
+			Def func_name(x)
+				Global x
+				x=1
+	Unlike java where a variable scope is defined within {} , in python the variable is in scope throughout the func.  Say for ex- a var declared within an IF statement in java is out of scope just outside the IF, but is in scope for python.
+	
+	Exception Handling: 
+	
+	try:
+		x=1/0
+	except ZeroDivisionError:
+		print("Divide by Zero error")
+	except:
+		print("Some error occured")
+	finally:
+	
+	A finally block of statement is an optional part of the try-except statements. A code written inside the finally block will ALWAYS be executed. Even if there is a return statement in the try/except, the finally block will be executed and only then the control flow will return to the calling env.
+	
+	Built-in Exception	When it will be raised	Example
+	ZeroDivisionError	When a value is divided by zero	num_list=[]
+			total=0
+			avg=total/len(num_list)
+	TypeError	When we try to do an operation with incompatible data types	total=10
+			total+="20"
+	NameError	When we try to access a variable which is not defined	avg=total/10 where total is not defined
+	IndexError	When we try to access an index value which is out of range	num_list=[1,2,3,4]
+			value=num_list[4]
+	ValueError	When we use a valid data type for an argument of a built-in function but passes an invalid value for it	#string is a valid data type for int() but the value “A” is invalid, as "A" can't be converted into int.
+			value="A"
+			num=int(value)
+	
+	
+	WITH  statement
+	Same as try..finally
+	>>> with open('/tmp/workfile', 'r') as f:
+...     read_data = f.read()
+>>> f.closed
+True
+	
+	From <https://stackoverflow.com/questions/1369526/what-is-the-python-keyword-with-used-for> 
+	
+	
+	
+	Packages:
+	
+		Python Project
+		Flights (package)                                        Employees (package)
+		_init_.py  (module)                                    _init_.py
+		ManageFlights.py                                      ManageEmployees.py
+		
+		Two ways of importing a module
+		a> from packagename import modulename.
+			Henceforth just use the modulename.function_name
+		b> import packagename.modulename
+			Henceforth use the complete pacakgename.modulename.function_name
+			
+		In case one function name is used in different modules of different packages below approach can be used.
+			Flights->Manage.py->add()
+			Employees->Manage.py->add()
+		(i) 
+		import Flights.Manage
+		import Employees.Manage
+		Flights.Manage.add()
+		Employees.Manage.add()
+		(ii) 
+		from Flights import Manage as Fmanage
+		from Employees import Manage as EManage
+		FManage.add() 
+		EManage.add() 
+		(iii) 
+		from Flights.Manage import add as add1
+		from Employees.Manage import add as add2
+		add1()
+		add2()
+		
+	Library: 
+	Math--> Math.ceil()
+	String--> str_Obj.replace("a","A")
+	List-->   listObj.append()             pop()  index()
+	Dictionary--> dictObj.get("key")         update({"key1":"val1" , "key2":"val2"})
+	Time/Date--> time.gmtime()        localtime()       strftime(t,format) - to format time t.   datetime.date.today() , datetime.datetime.strptime (date_string, format)	
+	
+File Handling:  
+	Method	Description
+	open(file_path, operation)	This method is used to open the file for the specified operation. The operation can either be r,w,a for read, write and append.
+	close()	This method is used to close a file which is already open.
+	write()	This method is used to write a string to a file, if file is present. If not, it creates the file and writes the string into it.
+	read()	This method is used to read all the contents of a file into a string.
+
+			try:
+			    flight_file=open("flight.txt","r")
+			    text=flight_file.read()
+			    print(text)
+			    flight_file.write(",Good Morning") 
+			    flight_file.close()
+			except:
+	
+	The number of files that can be simultaneously opened by a program is limited by OS . So it is important to close all the files, once the operations are completed. 
+
+Regular Expression :
+	re module can be used for regex.  Search() sub()
+	.  One char
+	.. Two char
+	\d  digit
+	r"asd..d"  r stands for raw string
+	[]  single character range.
+	|    pipe is an or operator. Ex-  r"he|she"
+	\s  space
+	*   0 or n occurrences  r"asd\d*"  
+	+  1 or n occurrences
+	?  0 or 1 occurrences
+	{n}  checks the preceeding character for n times. Ex- r"a\d{3}b"  in "a123b"
+	^     check pattern at the beginning of the string
+	$     at the end of string
+	\w  alphanumeric character 0-9 a-z A-Z
+	\     escape char
+	
+	Import re
+	re.search(<pattern>, <string>)   pattern can be of the form r"asd"
+	re.sub( <searchPattern>,<replacePattern>, <string>)
+	
+	
+Concurrency :
+Multitasking - unit of concurrency is the process which is like a task or job. Concurrency is achieved by interleaving execution of different tasks.
+Multithreading - unit of concurrency is a thread which is smaller or light weight compared to a process. One process can have multiple threads. This allows for a finer level of concurrency during interleaved execution.
+Multiprocessing - here we would have multiple CPUs executing concurrently. So processes or threads can be assigned to different available CPUs and be concurrently executed achieving concurrency
+	Multithreading --
+	thread1=Thread(target=tryit1)                              #we are creating one thread for function tryit1
+thread1.start()                                            #we are starting that thread
+thread2=Thread(target=tryit2)                              #we are creating one thread for function tryit2
+thread2.start()                                            #we are starting that thread
+                                                           #we are waiting for the threads to complete using join.
+thread1.join()
+thread2.join()
+	
+	https://docs.python.org/3/library/threading.html
+	Threading is another module introduced in later versions of python and should be used.   threading.Thread
+	
+Lambda Functions: 
+Temporary Functions without names.
+	Lambda <input_args>: <functionality and output>
+	g = lambda x,y:x*(x+y)
+	print(g(8,2))
+
+	(lambda x,y : x+y)(3,4)   --> 7
+	Lambdas are different from functions in the following respects:
+	
+	Functions have a name, Lambdas don’t.
+	Functions have a return keyword, Lambdas don’t.
+	Functions are used for reusability while lambdas are used inline whenever needed.
+	Functions can have multiple statements, Lambdas can have only an expression.
+	Lambdas are similar to functions in the following respects:
+	Both can take parameters and return a value
+	
+
+	Functions can be treated as values in some programming languages. If a value can be used for assignment, parameters, return types, etc., such a value is called as a first class citizen.
+		def check_bag(number):
+    print("Number of bags checked ",number)
+    
+x=check_bag
+x(4)
+	
+	Lambdas are used to create some good patterns of code. They are used in Higher Order Functions.  
+	
+Higher Order functions: 
+	Higher Order functions are those functions which can either accept another function as a parameter or return another function or both.
+	
+		Accept another func
+			def add(x,y):    
+    return x+y
+def call_function(func1,a,b):
+    ret=func1(a,b)
+    return ret
+print(call_function(add,10,20))
+		
+		Return another function
+			def ret_function(a,b):
+    a=a*a;
+    b=b*b;
+    return lambda :a+b
+new_func=ret_function(2,3);
+print(new_func()) 
+	
+	
+	
+	Example:
+			def add(data):
+    return data+2
+def prod(data):
+    return data*2
+def main_fun(function1,function2, number_list):
+    result_sum=0
+    for num in number_list:
+        if(num%3==0):
+            result_sum=result_sum+function1(num)
+        else:
+            result_sum=result_sum+function2(num)
+    return result_sum
+number_list=[1,3,5,6]
+print(main_fun(add, prod, number_list))
+	
+	
+	Example2
+			Q=[1,3,4,5,6,7,8,9,10,15,20]
+			
+			def sum_all():
+			    total=0
+			    for i in Q:
+			        total=total+i
+			    print(total)
+			
+			def sum_even():
+			    total=0
+			    for i in Q:
+			        if(i%2==0):
+			            total=total+i
+			    print(total)
+			
+			def sum_divisibleby3():
+			    total=0
+			    for i in Q:
+			        if(i%3==0):
+			            total=total+i
+			    print(total)
+			
+			sum_all()
+			sum_even()
+			sum_divisibleby3()
+			
+								
+								def sum_all(function, data):
+								    result_sum=0;
+								    for w in data:
+								        if(function(w)):
+								            result_sum = result_sum+ w
+								    return result_sum
+								
+								Q=[1,3,4,5,6,7,8,9,10,15,20]
+								
+								p = lambda x:x
+								
+								q = lambda x : x%2 == 0
+								
+								r = lambda x : x%3 == 0
+								
+								
+								print(sum_all(p,Q))
+								print(sum_all(q,Q))
+								print(sum_all(r,Q))
+			
+	
+	Callback functions ??
+	Anonymous classes/functions??
+	 Major libraries ??
+
+
+
+
+Class Monkey:
+	__bananas=40                                                           # static variable
+	def _init_(self)                                                           # constructor, called automatically when you create an object
+		self.no_of_bananas=40                                 # attribute of each object 
+dunston=Monkey()                         # here self refers to the obj dunston
+
+Any variable with __ (double underscore) is considered a private var
+Mutators->setters
+Accessors-> getters
+
+__str__(self)   :  printing an object directly:   overload this python method in the class definition and must return the value that needs to be printed. Print(objName)                                   
+		        automatically makes a call to this function.
+
+Class.varName:  Static variables can be accessed as Monkey.__bananas. Static variables are variables where only on instance of the var is shared across all the                                                 objects of the class
+
+@staticmethod                                            # annotation to show that the next method is a static method. Static methods are used to access static variables of a class.
+def get_bana_count():                                # Hence they need not be invoked by an object.     Class.staticMethod() can also be used.
+	return Monkey.__bananas
+	
+Has a Relationship: Also called as Aggregator. Here one class will have a custom member variable which will actually be an object of another class.
+Uses a Relationship:Also called as Association. When an object of one class is used as a local variable in another class(read method arg) 
+Is a Relationship: inheritence. Class Mondey(CircusAnimal)   asssuming Class CircusAnimal is predefined.
+
+super()._init_(arg/obj) :  In the child class constructor you can refer to the parent class constructor. Super() can be used to call any method of parent.
+
+Polymorphism: a functionName can be used in both the parentClass and the childClass.
+Multple Inheritence: Class Monkey(CircusAnimal, TreeAnimal)
+
+Abstract Methods: A class which has an abstract method cannot be instantiated. Also a child of this class must override the abstract method.
+		Class CircusAnimal(metaclass=ABCMeta)
+			@abstractmethod
+			def perform_trick()
+Raise keyword to be used for raising an exceptions. Ex - 
+		try:
+			raise customExcep
+		except  testExcep:
+			Print("abc")
+		Except customeExcep
+			Print("def")
+
+extend Exception class for creating custom errors. Class customExcep(Exception): 
+
+
+
+
+
+
+
+Python	JavaScript	Go
+if (condition):
+         statement 1
+	…
+         statement n
+elif(condition):
+         statement 1
+	…
+         statement n
+else:
+	statement 1
+	…
+         statement n
+statement 1
+…
+statement n
+	if(condition){
+   statement 1
+   …
+   statement n
+}
+else if(condition){
+    statement 1
+    …
+    statement n
+}
+else{
+    statement 1
+    …
+    statement n
+}
+statement 1
+…
+statement n
+	if(condition){
+   statement 1
+   …
+   statement n
+}else if(condition){
+    statement 1
+    …
+    statement n
+}else{
+    statement 1
+    …
+    statement n
+}
+statement 1
+…
+statement n
+
+		Note: Else or else if should start on the same line as that of the closing curly brace of if or else if.
+		Opening curly brace after else if should also be written in the same line.
+
+
+List Comprehension
+	http://www.secnetix.de/olli/Python/list_comprehensions.hawk
+	Mathematical notation.
+		S = {x² : x in {0 ... 9}}
+		V = (1, 2, 4, 8, ..., 2¹²)
+		M = {x | x in S and x even}
+		
+	Python notation for same:
+		>>> S = [x**2 for x in range(10)]
+		>>> V = [2**i for i in range(13)]
+		>>> M = [x for x in S if x % 2 == 0]
+		
+	More examples: 
+		>>> noprimes = [j for i in range(2, 8) for j in range(i*2, 50, i)]
+		>>> primes = [x for x in range(2, 50) if x not in noprimes]
+		>>> print primes
+	Nesting of list comprehension is possible. So the above exmaple can be re written using nesting and thus eliminating the need of an temp variable.
+	
+		new_list = []
+		for i in old_list:
+		    if filter(i):
+		        new_list.append(expressions(i))
+	
+Generators and Iterators
+http://anandology.com/python-practice-book/iterators.html
+
+	Iterators
+	We use for statement for looping over a list.
+	>>> for i in [1, 2, 3, 4]:
+	...     print i,
+	...
+	1
+	2
+	3
+	4
+	
+	If we use it with a string, it loops over its characters.
+	>>> for c in "python":
+	...     print c
+	...
+	p
+	y
+	t
+	h
+	o
+	N
+	
+	If we use it with a dictionary, it loops over its keys.
+	>>> for k in {"x": 1, "y": 2}:
+	...     print k
+	...
+	y
+	x
+	
+	If we use it with a file, it loops over lines of the file.
+	
+	>>> for line in open("a.txt"):
+	...     print line,
+	...
+	first line
+	second line
+	
+	The built-in function iter takes an iterable object and returns an iterator.
+	>>> x = iter([1, 2, 3])
+	>>> x
+	<listiterator object at 0x1004ca850>
+	>>> x.next()
+	1
+	>>> x.next()
+	2
+	>>> x.next()
+	3
+	>>> x.next()
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	StopIteration
+	
+	Each time we call the next method on the iterator gives us the next element. If there are no more elements, it raises a StopIteration.
+	
+	Generators
+	Generators simplifies creation of iterators. A generator is a function that produces a sequence of results instead of a single value.
+	def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i += 1
+	>>> y = yrange(3)
+>>> y
+<generator object yrange at 0x401f30>
+>>> y.next()
+0
+>>> y.next()
+1
+>>> y.next()
+2
+>>> y.next()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+	
+	So a generator is also an iterator.
+	
+
+MAP/REDUCE/FILTER
+	Map
+	http://www.bogotobogo.com/python/python_fncs_map_filter_reduce.php
+	
+	map(aFunction, aSequence)
+	Returns a list by passing each item of the sequence through the aFunction. This is one of the places where lambda functions are used. Multplie arguments can be given as it accepts a sequence.
+	e.g. 1
+		>>> list(map((lambda x: x **2), items))
+		[1, 4, 9, 16, 25]
+	e.g. 2
+		def square(x):
+        return (x**2)
+def cube(x):
+        return (x**3)
+		funcs = [square, cube]
+for r in range(5):
+    value = map(lambda x: x(r), funcs)
+		    print value
+		[0, 0]
+[1, 1]
+[4, 8]
+[9, 27]
+[16, 64]
+		
+	e.g. 3 If function is None, the identity function is assumed; if there are multiple arguments, map() returns a list consisting of tuples containing the corresponding items from all iterables (a kind of transpose operation). The iterable arguments may be a sequence or any iterable object; the result is always a list:
+		>>> m = [1,2,3]
+>>> n = [1,4,9]
+>>> new_tuple = map(None, m, n)
+>>> new_tuple
+[(1, 1), (2, 4), (3, 9)]
+		
+		
+	Filter
+	Filter extracts each element in the sequence for which the function returns True.
+	>>> list( filter((lambda x: x < 0), range(-5,5)))
+[-5, -4, -3, -2, -1]
+	
+	a = [1,2,3,5,7,9]
+b = [2,3,5,6,7,8]
+print filter(lambda x: x in a, b)  # prints out [2, 3, 5, 7]
+	Reduce
+	 It accepts an iterator to process, but it's not an iterator itself. It returns a single result:
+	
+	>>> from functools import reduce
+>>> reduce( (lambda x, y: x * y), [1, 2, 3, 4] )
+24
+	>>> reduce( (lambda x, y: x / y), [1, 2, 3, 4] )
+0.041666666666666664
+	
