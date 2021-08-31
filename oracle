@@ -1,0 +1,416 @@
+TOpics to cover
+---------------
+Oracle db structure
+
+SQL basics
+Hierarchical queries
+
+Pl/sql basics
+Data types
+
+Cursor
+Ref cursor
+
+Exception handling
+Packages
+
+Bulk collect
+
+Global temporary table
+
+Indexes types
+Partition
+
+Collections
+Xml parsing
+Json
+Joins
+
+Advanced TOpics
+---------------
+Exception handling
+
+SQLCODE: Returns the numeric value for the error code (Number)
+SQLERRM: Returns the message associated with the error number (Varchar2(255))
+Can be used in the Exception block.
+
+1> Predefined Implicit Exceptions
+	NO_DATA_FOUND
+	TOO_MANY_ROWS
+	INVALID_CURSOR
+	ZERO_DIVIDE
+	DUP_VAL_ON_INDEX
+	
+2>Non-Predefined Implicit Exceptions
+	DEFINE p_deno = 10
+	DECLARE
+	  e_emp_remaining EXCEPTION;
+	  PRAGMA EXCEPTION_INIT (e_emp_remaining, -2292);
+	BEGIN
+	  DELETE FROM departments WHERE  dept_id = &p_dno;
+	  COMMIT;
+	EXCEPTION
+	  WHEN e_emp_remaining   THEN
+	   DBMS_OUTPUT.PUT_LINE ('Cannot delete dept ' ||TO_CHAR(&p_deptno) || '.  employees exist. ');
+	END;
+	
+3> User_defined
+
+	DECLARE
+	  e_invalid_dept EXCEPTION;
+	BEGIN
+	  UPDATE	dept
+	  SET		dept_name = '&p_dept_desc'
+	  WHERE	department_id = &p_dept_no;
+	  IF SQL%NOTFOUND THEN
+	    RAISE e_invalid_dept;
+	  END IF;
+	  COMMIT;
+	EXCEPTION
+	  WHEN e_invalid_dept  THEN
+	    DBMS_OUTPUT.PUT_LINE('No such department id.');
+	END;
+
+Raise_Application_Error(error_number, error_msg, [TRUE|FALSE])
+	You can use this procedure to issue user-defined error messages from stored subprograms.
+	You can report errors to your application and avoid returning unhandled exceptions.
+
+	error_number		is a user-specified number for the exception between –20000 and –20999.
+	message		is the user-specified message for the exception. It is a character string up to 2,048 bytes long.
+	TRUE | FALSE	    is an optional Boolean parameter (If TRUE, the error is placed on the stack of previous errors. If FALSE, the default, the error replaces all previous errors.)
+
+
+*******************************************************************************************************************************************************************
+
+Global Temporary Table
+CREATE GLOBAL TEMPORARY TABLE <Table-name> 
+(
+[COLUMN DEFINTION]
+) ON COMMIT [DELETE | PRESERVE] ROWS;
+	
+	ON COMMIT DELETE ROWS sets the life of the data contained by the table to a single TRANSACTION. The data is automatically flushed away after each COMMIT/ROLLBACK is executed. These are Transaction-specific Temporary tables.
+	On the other hand, ON COMMIT PRESERVE ROWS restricts the life of the data to a single SESSION. Data is preserved in the table for a session only. These are Session-specific Temporary tables.
+	
+Benefitis : A temporary table definition persists in the same way as a permanent table definition, but the data exists only for the duration of a transaction or session. Temporary tables are useful in applications where a result set must be held temporarily, perhaps because the result is constructed by running multiple operations.
+When a code goes long and a lot of cursors are opened it better to put the data in a temporary table so that it can be easily fetched at the time needed.
+
+*************************************************************************************************************************
+
+
+show errors;
+
+
+Adv topic2
+----------
+DEFINE p_deno = 10
+DECLARE
+  e_emp_remaining EXCEPTION;
+  PRAGMA EXCEPTION_INIT (e_emp_remaining, -2292);
+BEGIN
+  DELETE FROM departments WHERE  dept_id = &p_dno;
+  COMMIT;
+EXCEPTION
+  WHEN e_emp_remaining   THEN
+   DBMS_OUTPUT.PUT_LINE ('Cannot delete dept ' ||TO_CHAR(&p_deptno) || '.  employees exist. ');
+END;
+
+
+
+dynamic sequel - dbms_sql, Execute immedeate.
+
+packages specs/body
+error handling - 
+11g queries- pivot , unpivot key-value pairs.
+case statements.
+partition pruning , partition wise join -> partition key used in explain plan.
+
+co-related query
+
+bulk collect - ref cursor - exceptions raised
+
+data warehouse-volume and velocity
+data hub - no major transformation.
+	A data hub is a collection of data from multiple sources organized for distribution, sharing, and often subsetting and sharing. Generally this data distribution is in the form of a hub and spoke architecture.
+	It's a traditional EAI architecture where a single integration server, the hub, handles the information exchange and transformation for many applications or data stores, the spokes. Most application integration leverages hub and spoke today, however more advanced architectures are emerging based on distributed hubs or peer-to-peer.
+warehouse - 12 rules
+	Data warehouse (DW or DWH), also known as an enterprise data warehouse (EDW), is a system used for reporting and data analysis. DWs are central repositories of integrated data from one or more disparate sources. They store current and historical data in one single place[2] that are used for creating analytical reports for knowledge workers throughout the enterprise.
+	http://people.stfx.ca/rmackinn/Cd%20W%20Dr%20June%202%2001/316/DWRULES.HTM
+	
+datamart- aggregation , analytical
+	A data mart is the access layer of the data warehouse environment that is used to get data out to the users. The data mart is a subset of the data warehouse and is usually oriented to a specific business line or team. Whereas data warehouses have an enterprise-wide depth, the information in data marts pertains to a single department. In some deployments, each department or business unit is considered the owner of its data mart including all the hardware, software and data.[1] This enables each department to isolate the use, manipulation and development of their data. In other deployments where conformed dimensions are used, this business unit ownership will not hold true for shared dimensions like customer, product, etc.
+	https://www.google.co.in/imgres?imgurl=https://image.slidesharecdn.com/datamart-140405013513-phpapp02/95/data-mart-4-638.jpg?cb%3D1396661755&imgrefurl=https://www.slideshare.net/prachi091/data-mart-33156883&h=479&w=638&tbnid=fAvOc1pbpGNNQM:&tbnh=150&tbnw=200&usg=__S7nwZs8-J45EBgoanFWqz8RcXMM%3D&vet=10ahUKEwis_9_E4d7XAhWGN48KHW4UDAkQ_B0IpAEwEw..i&docid=lg2D6IyT-IFg9M&itg=1&sa=X&ved=0ahUKEwis_9_E4d7XAhWGN48KHW4UDAkQ_B0IpAEwEw
+	
+
+
+
+
+analytical function - RANK, ROWNUM , windowing function 
+partition - 
+		
+direct path load - insert append.
+	The APPEND hint tells the optimizer to perform a direct-path insert, which improves the performance of INSERT .. SELECT operations for a number of reasons:
+	Data is appended to the end of the table, rather than attempting to use existing free space within the table. Adds records above the current high water mark.
+	Data is written directly to the data files, by-passing the buffer cache.
+	Referential integrity constraints are not considered. *
+	No trigger processing is performed. *
+	INSERT /*+ APPEND */ INTO t1 SELECT * FROM all_objects;
+	You can add nologging.
+
+Direct Load - Insert Into table(col1, col2) Select * from table
+	A major benefit of direct-load INSERT is that you can load data without logging redo or undo entries.
+	Direct-load INSERT updates the indexes of the table.
+	With a parallel INSERT, atomicity of the transaction is ensured. Atomicity cannot be guaranteed if multiple parallel loads are used.
+CTAS - no logging - parallel enable  ..
+
+NOLOGGING clause present in user_tables
+---------------------------------------
+SQL> create table sales_x10_logging as
+     select * from sales_x10;
+"The NOLOGGING clause also specifies that subsequent direct loads using SQL*Loader and direct load INSERT operations are not logged.
+SQL> alter table sales_no_ts_logging LOGGING;
+https://www.databasejournal.com/features/oracle/article.php/3631361/Managing-Tables-Logging-versus-Nologging.htm
+
+Table partition
+1     Range partitions
+2     List partitions
+3     Hash partitions
+
+
+explain plan - index, join methods- hash/nested /merge join
+Joins
+	
+	Hash joins - In a hash join, the Oracle database does a full-scan of the driving table, builds a RAM hash table, and then probes for matching rows in the other table.  For certain types of SQL, the hash join will execute faster than a nested loop join, but the hash join uses more RAM resources.  
+	Best suited for joins between a small table and a large table.
+	
+	Nested loops join - The nested loops table join is one of the original table join plans and it remains the most common.  In a nested loops join, we have two tables a driving table and a secondary table.  The rows are usually accessed from a driving table index range scan, and the driving table result set is then nested within a probe of the second table, normally using an index range scan method.
+	/*+ use_nl */   /*+ use_nl_with_index */
+	Best suited for 2 small tables.
+	
+	Merge Joins-
+		The merge join requires that both inputs be sorted on the merge columns, which are defined by the equality (WHERE) clauses of the join predicate. The query optimizer typically scans an index, if one exists on the proper set of columns, or places a sort operator below the merge join.
+		Get First Row T1R from Table1
+		Get First Row T2R from Table2
+
+		While Not End of Table1 and Not End of Table2
+		  If T1R joins with T2R
+			  Get Next Row from Table2
+			  Returns (T1R, T2R)
+		  Else T1R < T2R
+			  Get NEXT Row from Table1
+		  Else
+			  Get Next Row from Table2
+		End Loop
+		Best suited where the tables are sorted and have an index on the joining columns.
+		
+
+
+hints - parallel, hash ,no index hint, no merge hint.
+	parallel
+		SELECT /*+ parallel(c,2) */ * FROM sh.customers c ORDER BY cust_first_name
+		where 2 is the number of parallel slaves for the query.
+		It can also be hardcoded for the table.  Degree of parallelism - can either with hints in the statement or in the DDL of the objects.
+		ALTER TABLE sales PARALLEL 8;
+
+	hash
+		The Oracle use_hash hint requests a hash join against the specified tables. Essentially, a hash join is a technique whereby Oracle loads the rows from the driving table (the smallest table, first after the where clause) into a RAM area defined by the hash_area_size, or memory_target initialization parameter,
+		Oracle then uses a hashing technique to locate the rows in the larger second table. A hash join is often combined with parallel query in cases where both tables are very large.
+		 SELECT /*+ USE_HASH (t0) */ * FROM t0  WHERE id IN (SELECT id   FROM t1 JOIN t2 ON t1.t1_id = t2.t1_id  WHERE t2.pad LIKE :x);
+		 SELECT /*+ use_hash(e,b) parallel(e, 4) parallel(b, 4) */ e.ename, hiredate, b.comm from emp e, bonus b  where e.ename = b.ename ;
+ 
+	no_index
+		To be used when we know that using a certain index will be slower (than doing a full table scan). It could be because that it is not having a up to date stats of the table.
+		guess-It could also be if a table is particularly small.
+		Select|Insert|Update|Delete /* + NO_INDEX(table, index) */ from....
+		It can have index_name(s). In case no index_name is specified, it means that none of the indexes to be used.
+	
+	no_merge 
+		CREATE OR REPLACE VIEW v1 AS SELECT * FROM employees WHERE employee_id < 150;
+		CREATE OR REPLACE VIEW v2 AS SELECT v1.employee_id employee_id, departments.department_id department_id FROM v1, departments WHERE v1.department_id = departments.department_id;
+		SELECT /*+ NO_MERGE(v2) INDEX(v2.v1.employees emp_emp_id_pk) FULL(v2.departments) */ * FROM v2 WHERE department_id = 30;
+		The hints cause v2 not to be merged and specify access path hints for the employee and department tables. These hints are pushed down into the (nonmerged) view v2.
+
+
+
+
+
+
+
+collections & records.
+	https://oracle-base.com/articles/8i/collections-8i#varrays
+	
+	Index-By Tables (Associative Arrays) :-These behave in the same way as arrays except that have no upper bounds, allowing them to constantly extend.
+			DECLARE
+			  TYPE table_type IS TABLE OF NUMBER(10)
+				INDEX BY BINARY_INTEGER;
+			  
+			  v_tab  table_type;
+			  v_idx  NUMBER;
+			BEGIN
+			  -- Initialise the collection.
+			  << load_loop >>
+			  FOR i IN 1 .. 5 LOOP
+				v_tab(i) := i;
+			  END LOOP load_loop;
+			  
+			  -- Delete the third item of the collection.
+			  v_tab.DELETE(3);
+			  
+			  -- Traverse sparse collection
+			  v_idx := v_tab.FIRST;
+			  << display_loop >>
+			  WHILE v_idx IS NOT NULL LOOP
+				DBMS_OUTPUT.PUT_LINE('The number ' || v_tab(v_idx));
+				v_idx := v_tab.NEXT(v_idx);
+			  END LOOP display_loop;
+			END;
+			/
+
+			The number 1
+			The number 2
+			The number 4
+			The number 5
+
+			PL/SQL procedure successfully completed.
+	
+	Nested table collections are an extension of the index-by tables. The main difference between the two is that nested tables can be stored in a database column but index-by tables cannot. In addition some DML operations are possible on nested tables when they are stored in the database
+	
+	VARRAY:-
+		A VARRAY is similar to a nested table except you must specifiy an upper bound in the declaration. Like nested tables they can be stored in the database, but unlike nested tables individual elements cannot be deleted so they remain dense.
+
+
+			DECLARE
+			  TYPE table_type IS VARRAY(5) OF NUMBER(10);
+			  v_tab  table_type;
+			  v_idx  NUMBER;
+			BEGIN
+			  -- Initialise the collection with two values.
+			  v_tab := table_type(1, 2);
+
+			  -- Extend the collection with extra values.
+			  << load_loop >>
+			  FOR i IN 3 .. 5 LOOP
+				v_tab.extend;
+				v_tab(v_tab.last) := i;
+			  END LOOP load_loop;
+			  
+			  -- Can't delete from a VARRAY.
+			  -- v_tab.DELETE(3);
+
+			  -- Traverse collection
+			  v_idx := v_tab.FIRST;
+			  << display_loop >>
+			  WHILE v_idx IS NOT NULL LOOP
+				DBMS_OUTPUT.PUT_LINE('The number ' || v_tab(v_idx));
+				v_idx := v_tab.NEXT(v_idx);
+			  END LOOP display_loop;
+			END;
+			/
+
+			The number 1
+			The number 2
+			The number 3
+			The number 4
+			The number 5
+
+			PL/SQL procedure successfully completed.
+
+			Extending the load_loop to 3..6 attempts to extend the VARRAY beyond it's limit of 5 elements resulting in the following error.
+			ERROR at line 1:
+			ORA-06532: Subscript outside of limit
+			ORA-06512: at line 12
+
+
+	Multiset UNION 
+	The MULTISET UNION operator joins the two collections together, doing the equivalent of a UNION ALL between the two sets. The MULTISET UNION and MULTISET UNION ALL operators are functionally equivalent.
+
+			DECLARE
+			  TYPE t_tab IS TABLE OF NUMBER;
+			  l_tab1 t_tab := t_tab(1,2,3,4,5,6);
+			  l_tab2 t_tab := t_tab(5,6,7,8,9,10);
+			BEGIN
+			  l_tab1 := l_tab1 MULTISET UNION l_tab2;
+			  
+			  FOR i IN l_tab1.first .. l_tab1.last LOOP
+				DBMS_OUTPUT.put_line(l_tab1(i));
+			  END LOOP;
+			END;
+			/
+			1
+			2
+			3
+			4
+			5
+			6
+			5
+			6
+			7
+			8
+			9
+			10
+
+			PL/SQL procedure successfully completed.
+
+
+	User Defined Types:-
+		CREATE TYPE customer_address (
+			street_address    char(20),
+			city_address       char(20),
+			state_name          char(2) CONSTRAINT STATE_NAME IN ('CA','NY','IL','GA','FL'),         
+			zip_code             number(9)) DEFAULT VALUE 0; 
+			
+			We could then treat customer_address as a valid data type,  using it to create tables and select data:
+			CREATE TABLE customer (
+				full_name                  cust_name,
+				full_address              customer_address,
+				. . . 
+				);
+			
+			Now that the Oracle table is defined, we can reference full_address in our SQL just as if it were a primitive data type:
+			INSERT INTO customer VALUES (
+				full_name ('ANDREW','S.','BURLESON'),
+				full_address('123 1st st.','Minot, ND','74635');
+	
+			 Note that the SQL select statements change when accessing rows that contain user-defined data types.   Here is the SQL syntax to select a component of full_address:
+			 SELECT full_address.zip_code 
+				 FROM customer
+				 WHERE
+				 full_address.zip_code LIKE '144%';
+				 
+REF Curosr:-				 
+	A ref cursor is a variable, defined as a cursor type, which will point to, or reference a cursor result. The advantage that a ref cursor has over a plain cursor is that is can be passed as a variable to a procedure or a function. The REF CURSOR can be assigned to other REF CURSOR variables.
+
+		type author_cursor is ref cursor;
+		c1 auth_cursor;
+		
+		 open c1 for select * from author;
+		 fetch c1 into r_c1;
+		 if c1%isopen then
+		 dbms_output.put_line('The Cursor is open.');
+		 end if;
+		 
+Bulk Collect:-
+
+		    type id_array is table of varchar2(300) index by binary_integer;
+			req_ids id_array;
+
+			OPEN idCur FOR stmt_str ; 
+            LOOP
+                  FETCH idCur BULK COLLECT INTO req_ids LIMIT 500;
+                  EXIT WHEN row_count = idCur%ROWCOUNT;
+	
+
+
+
+
+How to Pass Java List of Objects to Oracle Stored Procedure:-
+	https://stackoverflow.com/questions/12719689/how-to-pass-java-list-of-objects-to-oracle-stored-procedure-using-mybatis
+				CREATE OR REPLACE TYPE SCHEMA."YOUR_OBJECT" AS OBJECT
+			(
+				field_one    varchar2(50),
+				field_two    varchar2(100)
+			);
+			/
+			CREATE OR REPLACE TYPE SCHEMA."YOUR_OBJECT_ARRAY" AS TABLE OF YOUR_OBJECT;
+
+Bulk Binding:- bulk collect and forall
+ http://www.dba-oracle.com/oracle_tips_rittman_bulk%20binds_FORALL.htm
